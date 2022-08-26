@@ -26,6 +26,9 @@ class MyClient(commands.Bot):
     async def on_ready(self):
         print('Logged in as', self.user)
 
+    async def on_command_error(self, ctx, error):
+        await ctx.reply(error, ephemeral=True)
+
 
 
 
@@ -44,6 +47,7 @@ async def ping(ctx):
 async def test(ctx, *args):
     # print("firing this")
     arguments = ', '.join(args)
+    print(args[5])
     await ctx.reply(f'{len(args)} arguments: {arguments}')
 
 @bot.command()
