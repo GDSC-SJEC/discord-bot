@@ -1,6 +1,4 @@
-from unicodedata import name
 import discord
-from discord import app_commands
 from discord.ext import commands
 from discord.utils import get
 import dotenv
@@ -42,8 +40,9 @@ class button_view(discord.ui.View):
         
     @discord.ui.button(label = "verify", style = discord.ButtonStyle.green, custom_id = "verify")
     async def verify(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.send_message(f"Thank you {interaction.user}, You are now a verified user\n ``` Now you can use ~joingdsc [domain index] command to join your domain of interest!```")
-        await interaction.response.send_message('')
+        verifiedUser = discord.utils.get(interaction.guild.roles, name = 'verified')
+        await interaction.user.add_roles(verifiedUser)
+        await interaction.response.send_message(f"Thank you {interaction.user}, You are now a verified user✅\n ``` Now you can use ~joingdsc [domain index] command to join your domain of interest!```")
 
 
 
@@ -83,6 +82,17 @@ async def join(ctx):
 # @commands.has_role("GDSC-SJEC") 
 async def joingdsc(ctx, index):
     try:
+        userCurrentRole = list(map(str,ctx.author.roles))
+        print(userCurrentRole)
+
+        if len(userCurrentRole) > 4:
+            await ctx.reply(f'You have reached your maximum level of domains!\n Contact Admin for Help 🤗', ephemeral=True)
+            return
+
+        if 'verified' not in userCurrentRole:
+            await ctx.reply('Please verify yourself before joining any domain!')
+            return
+
         if index == '8':
             await ctx.reply('Contact Admin for Assistance')
             return
@@ -100,6 +110,10 @@ async def joingdsc(ctx, index):
 async def gdsc(ctx):
     await ctx.reply('Avilable Commands are: \n```1. ~test\n2. ~join\n3. ~gdsc \n4. ~ping```')
     # await discord.Interaction.response.send_message(view = button_view())
+
+@bot.hybrid_command(name = 'verify', with_app_command = True)
+async def gdsc(ctx):
+    await ctx.reply(view = button_view())
 
 
 @bot.event
