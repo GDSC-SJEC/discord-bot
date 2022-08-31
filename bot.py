@@ -47,6 +47,7 @@ class button_view(discord.ui.View):
 
 
 bot = MyClient()
+bot.remove_command('help')
 # tree = app_commands.CommandTree(bot)
 
 domains = ['Web Development', 'Mobile App Development', 'Game Development', 'AI/ML', 'Cloud Computing', 'Competitive Programming',  'UI/UX']
@@ -55,7 +56,7 @@ roles = ['WEB', 'MOBILE', 'GAME', 'AI/ML', 'CLOUD', 'COMPETITIVE', 'UI/UX']
 
 # bot = commands.Bot(command_prefix='!', intents = discord.Intents.default())
 
-@bot.command(name='button', description='just a verify button')
+@bot.command(name='verify button', description='just a verify button')
 async def button(interaction: discord.Interaction):
     await interaction.reply('Please Verify before youself before you can join any domain!')
     await interaction.send(view = button_view())
@@ -64,12 +65,12 @@ async def button(interaction: discord.Interaction):
 async def pinging(ctx):
     await ctx.reply('Pong~')
 
-@bot.command()
-async def test(ctx, *args):
-    # print("firing this")
-    arguments = ', '.join(args)
-    # print(arguments[5])
-    await ctx.reply(f'{len(args)} arguments: {arguments}')
+# @bot.command()
+# async def test(ctx, *args):
+#     # print("firing this")
+#     arguments = ', '.join(args)
+#     # print(arguments[5])
+#     await ctx.reply(f'{len(args)} arguments: {arguments}')
 
 @bot.command()
 async def join(ctx):
@@ -108,7 +109,7 @@ async def joingdsc(ctx, index):
 
 @bot.hybrid_command(name = 'gdsc', with_app_command = True)
 async def gdsc(ctx):
-    await ctx.reply('Avilable Commands are: \n```1. ~test\n2. ~join\n3. ~gdsc \n4. ~ping```')
+    await ctx.reply('Avilable Commands are: \n```2. ~join\n3. ~gdsc \n4. ~ping```')
     # await discord.Interaction.response.send_message(view = button_view())
 
 @bot.hybrid_command(name = 'verify', with_app_command = True)
@@ -121,7 +122,7 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    if 'hello' in message.content.lower():
+    if 'hello' in message.content.lower() or 'hi' in message.content.lower():
         await message.channel.send(f'Hello {message.author.name} (👉ﾟヮﾟ)👉,\n Wassup, You can type **~gdsc** to see the available commands')
 
     # if message.content.startswith('$join'):
