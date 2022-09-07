@@ -33,7 +33,7 @@ class MyClient(commands.Bot):
 
     async def on_command_error(self, ctx, error):
         print(error)
-        await ctx.reply(error, ephemeral=True)
+        await ctx.reply(error, ephemeral=True) # Dont print error in the discord channel
 
 class verify_button_view(discord.ui.View):
     def __init__(self):
@@ -70,67 +70,67 @@ class form_button_view(discord.ui.View):
     #     await interaction.followup.send("Thank you for filling the form")
 
 
-class domainDropdown(discord.ui.View):
-    @discord.ui.select(
-        min_values = 1,
-        max_values = 2,
-        placeholder = "Choose a domain you would like to delve into!",
-        options = [
-            discord.SelectOption(
-                label = "Web Development",
-                description = "GDSC",
-                emoji = "🌐"
-            ),
-            discord.SelectOption(
-                label = "Mobile App Development",
-                description = "GDSC",
-                emoji = "📱"
-            ),
-            discord.SelectOption(
-                label = "Game Development",
-                description = "Get in the Game!",
-                emoji = "🎮"
-            ),
-            discord.SelectOption(
-                label = "AI/ML",
-                description = "GDSC",
-                emoji = "🤖"
-            ),
-            discord.SelectOption(
-                label = "Cloud Computing",
-                description = "GDSC",
-                emoji = "☁️"
-            ),
-            discord.SelectOption(
-                label = "Competitive Programming",
-                description = "GDSC",
-                emoji = "🏅"
-            ),
-            discord.SelectOption(
-                label = "UI/UX Design",
-                description = "GDSC",
-                emoji = "🖼"
-            ),
-        ]
-    )
+# class domainDropdown(discord.ui.View):
+#     @discord.ui.select(
+#         min_values = 1,
+#         max_values = 2,
+#         placeholder = "Choose a domain you would like to delve into!",
+#         options = [
+#             discord.SelectOption(
+#                 label = "Web Development",
+#                 description = "GDSC",
+#                 emoji = "🌐"
+#             ),
+#             discord.SelectOption(
+#                 label = "Mobile App Development",
+#                 description = "GDSC",
+#                 emoji = "📱"
+#             ),
+#             discord.SelectOption(
+#                 label = "Game Development",
+#                 description = "Get in the Game!",
+#                 emoji = "🎮"
+#             ),
+#             discord.SelectOption(
+#                 label = "AI/ML",
+#                 description = "GDSC",
+#                 emoji = "🤖"
+#             ),
+#             discord.SelectOption(
+#                 label = "Cloud Computing",
+#                 description = "GDSC",
+#                 emoji = "☁️"
+#             ),
+#             discord.SelectOption(
+#                 label = "Competitive Programming",
+#                 description = "GDSC",
+#                 emoji = "🏅"
+#             ),
+#             discord.SelectOption(
+#                 label = "UI/UX Design",
+#                 description = "GDSC",
+#                 emoji = "🖼"
+#             ),
+#         ]
+#     )
 
-    async def callback(self, interaction, select):
-        roles = {
-            "Web Development": "WEB",
-            "Mobile App Development": "MOBILE",
-            "Game Development": "GAME",
-            "AI/ML": "AI/ML",
-            "Cloud Computing": "CLOUD",
-            "Competitive Programming": "COMPETITIVE",
-            "UI/UX Design": "UI/UX"
+#     async def callback(self, interaction, select):
+#         roles = {
+#             "Web Development": "WEB",
+#             "Mobile App Development": "MOBILE",
+#             "Game Development": "GAME",
+#             "AI/ML": "AI/ML",
+#             "Cloud Computing": "CLOUD",
+#             "Competitive Programming": "COMPETITIVE",
+#             "UI/UX Design": "UI/UX"
 
-        }
-        for domain in select.values:
-            verifiedUser = discord.utils.get(interaction.guild.roles, name = roles[domain])
-            await interaction.user.add_roles(verifiedUser)
-        select.disabled = True
-        await interaction.response.edit_message(view=self)
-        await interaction.followup.send(f"Thank you 🥳\n You have succesfully joined the following domains {select.values} ")
+#         }
+#         for domain in select.values:
+#             verifiedUser = discord.utils.get(interaction.guild.roles, name = roles[domain])
+#             await interaction.user.add_roles(verifiedUser)
+#         select.disabled = True
+#         await interaction.response.edit_message(view=self)
+#         await interaction.followup.send(f"Thank you 🥳\n You have succesfully joined the following domains {select.values} ")
 
 # class testModal(discord.ui.View):
 #     def __init__(self):
@@ -209,10 +209,11 @@ async def joingdsc(ctx):
 
         # await ctx.reply(f'Congratulations 🎉🎊,\nYou have Succesfully joined {domain}')
 
-        await ctx.send(view = domainDropdown())
+        # await ctx.send(view = domainDropdown())
+        await ctx.send("Please go the #join channel and react to your interested Domain")
 
-    except IndexError:
-        await ctx.reply(f'Invalid Domain \n ＞︿＜')
+    except Exception:
+        await ctx.reply(f'＞︿＜')
 
 @bot.hybrid_command(name = 'gdsc', with_app_command = True)
 async def gdsc(ctx):
@@ -242,7 +243,7 @@ async def on_message(message):
         # embed.add_field(name="You are good to go now!", value = '', inline=False)
         await message.author.send(embed = embed)
 
-    if message.content.lower().startswith('send'):
+    if message.content.lower().startswith('domains'):
         # embed = discord.Embed(color = 0xff00ff, title = 'Web Development', description = "Web Dev is sexy profession")
         # embed.set_footer(text = "For more information contact the domain lead by clicking the name above")
         # embed.set_image(url = "https://picsum.photos/800/200?random=1")
@@ -258,12 +259,12 @@ async def on_message(message):
                 'author' : {'name' : 'ashish', 'url' : 'https://www.google.com', 'icon_url' : 'https://www.google.com'}
             },
             {
-                'color' : 0xff8fff,
-                'title' : 'Game Development',
-                'description' : 'Game Development is also sexy',
-                'footer' : {'text' : 'For more information contact the domain lead by clicking the name above'},
-                'image' : {'url' : 'https://picsum.photos/800/200?random=2', 'height' : 200, 'width' : 800},
-                'author' : {'name' : 'ashish', 'url' : 'https://www.google.com', 'icon_url' : 'https://www.google.com'}
+            'color' : 0xffffff,
+            'title' : 'Game Development',
+            'description' : 'An art of developing a virtual world which models by the rules and constraints defined by you.',
+            'footer' : {'text' : 'If you want to know more about Game Dev or have some doubts , you can always ping me by clicking on my name!'},
+            'image' : {'url' : 'https://imgur.com/b3CirLf', 'height' : 200, 'width' : 800},
+            'author' : {'name' : 'Ashish Kishore', 'url' : 'https://www.linkedin.com/in/ashish-kishore-kumar/', 'icon_url' : 'https://imgur.com/a/SkEI7kU' }
             },
             {
                 'color' : 0xff09ff,
@@ -295,10 +296,13 @@ async def on_member_join(member):
 
 @bot.event
 async def on_reaction_add(reaction, user):
-    print(reaction.message)
-    reacted = discord.utils.get(reaction.message.guild.roles, name = 'dummy')
-    await user.add_roles(reacted)
-    await user.send("you reacted to the message")
+    if reaction.message.channel.name == 'testing':
+        try:
+            reacted = discord.utils.get(reaction.message.guild.roles, name = roles[reaction.message.embeds[0].title])
+            await user.add_roles(reacted)
+            await user.send(f"You are now a part of the {reaction.message.embeds[0].title} Domain of GDSC-SJEC community 🥳")
+        except IndexError:
+            await user.send("Oh Sorry!, You reacted to wrong message 😕")
 
 
 
