@@ -9,9 +9,6 @@ import os
 dotenv_file = os.path.join(os.curdir, ".env")
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
-else:
-    print('Set env file with token before moving forward')
-    exit(0)
 
 # SETTING UP CLASS FOR DISCORD CLIENT
 class MyClient(commands.Bot):
@@ -27,9 +24,9 @@ class MyClient(commands.Bot):
         # self.add_view(verify_button_view())
         # self.add_view(form_button_view())
 
-    # async def setup_hook(self):
-    #     await self.tree.sync()
-    #     print(f"Synced slash commands for {self.user.name}")
+    async def setup_hook(self):
+        await self.tree.sync()
+        print(f"Synced slash commands for {self.user.name}")
 
     async def on_command_error(self, ctx, error):
         print(error)
@@ -143,7 +140,7 @@ class form_button_view(discord.ui.View):
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 bot = MyClient()
-# bot.remove_command('help')
+bot.remove_command('help')
 # tree = app_commands.CommandTree(bot)
 
 domains = ['Web Development', 'Mobile App Development', 'Game Development', 'AI/ML', 'Cloud Computing', 'Competitive Programming',  'UI/UX']
@@ -184,34 +181,34 @@ async def join(ctx):
     await ctx.send(embed = embed, view = verify_button_view())
 
 
-@bot.hybrid_command(name = 'joingdsc', with_app_command = True)
-# @commands.has_role("GDSC-SJEC") 
-async def joingdsc(ctx):
-    try:
-        userCurrentRole = list(map(str,ctx.author.roles))
-        print(userCurrentRole)
+# @bot.hybrid_command(name = 'joingdsc', with_app_command = True)
+# # @commands.has_role("GDSC-SJEC") 
+# async def joingdsc(ctx):
+#     try:
+#         userCurrentRole = list(map(str,ctx.author.roles))
+#         print(userCurrentRole)
 
-        # if len(userCurrentRole) > 4:
-        #     await ctx.reply(f'You have reached your maximum level of domains!\n Contact Admin for Help 🤗', ephemeral=True)
-        #     return
+#         # if len(userCurrentRole) > 4:
+#         #     await ctx.reply(f'You have reached your maximum level of domains!\n Contact Admin for Help 🤗', ephemeral=True)
+#         #     return
 
-        if 'verified' not in userCurrentRole:
-            await ctx.reply('Please verify yourself before joining any domain!')
-            return
+#         if 'verified' not in userCurrentRole:
+#             await ctx.reply('Please verify yourself before joining any domain!')
+#             return
 
-        # domain = domains[int(index)-1]   
+#         # domain = domains[int(index)-1]   
         
-        # member = ctx.author
-        # var = discord.utils.get(ctx.guild.roles, name = roles[int(index)-1])
-        # await member.add_roles(var)
+#         # member = ctx.author
+#         # var = discord.utils.get(ctx.guild.roles, name = roles[int(index)-1])
+#         # await member.add_roles(var)
 
-        # await ctx.reply(f'Congratulations 🎉🎊,\nYou have Succesfully joined {domain}')
+#         # await ctx.reply(f'Congratulations 🎉🎊,\nYou have Succesfully joined {domain}')
 
-        # await ctx.send(view = domainDropdown())
-        await ctx.send("Please go the #join channel and react to your interested Domain")
+#         # await ctx.send(view = domainDropdown())
+#         await ctx.send("Please go the #join channel and react to your interested Domain")
 
-    except Exception:
-        await ctx.reply(f'＞︿＜')
+#     except Exception:
+#         await ctx.reply(f'＞︿＜')
 
 @bot.hybrid_command(name = 'gdsc', with_app_command = True)
 async def gdsc(ctx):
@@ -221,6 +218,79 @@ async def gdsc(ctx):
 @bot.hybrid_command(name = 'verify', with_app_command = True)
 async def verify(ctx):
     await ctx.reply(view = verify_button_view())
+
+@bot.hybrid_command(name = 'domains', with_app_command = True)
+async def domains(ctx):
+    domains = [
+    {
+    'color': 0x064f9a,
+    'title': 'Web Development',
+    'description': 'The web is our playground, come be a part of the team that shapes the web',
+    'footer' : {'text': 'For more information contact the domain lead by clicking the name above'},
+    'image' : {'url': 'https://wallpaperaccess.com/full/1657858.jpg', 'height': 200, 'width': 800},
+    'author' : {'name': 'Godnon', 'url': 'https://www.linkedin.com/in/godnon-dsilva/', 'icon_url': 'https://avatars.githubusercontent.com/u/50076340?v=4'}
+    },
+    {
+    'color' : 0xffffff,
+    'title' : 'Game Development',
+    'description' : 'An art of developing a virtual world which models by the rules and constraints defined by you.',
+    'footer' : {'text' : 'If you want to know more about Game Dev or have some doubts , you can always ping me by clicking on my name!'},
+    'image' : {'url' : 'https://images.unsplash.com/photo-1556438064-2d7646166914?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'height' : 200, 'width' : 800},
+    'author' : {'name' : 'Ashish Kishore', 'url' : 'https://www.linkedin.com/in/ashish-kishore-kumar/', 'icon_url' : 'https://avatars.githubusercontent.com/u/68268366?v=4' }
+    },
+    {
+    'color' : 0xffffff,
+    'title' : 'Android Development',
+    'description' : 'Android development mainly focuses on the development of android applications using kotlin and flutter.',
+    'footer' : {'text' : 'For more information contact the domain lead by clicking the name above'},
+    'image' : {'url' : 'https://media.discordapp.net/attachments/1017871199654658099/1018025844976910386/Android_Image.jpg', 'height' : 200, 'width' : 800},
+    'author' : {'name' : 'Pratheek', 'url' : 'https://www.linkedin.com/in/pratheek-raghunath/', 'icon_url' : 'https://media.discordapp.net/attachments/776130355681427498/1018026587163213864/Dp.jpeg'}
+    },
+    {
+    'color' : 0x000000,
+    'title' : 'AI/ML',
+    'description' : 'Artificial Intelligence: Where machines are smarter',
+    'footer' : {'text' : 'Contact me by clicking on my name, Thank you 🤗'},
+    'image' : {'url' : 'https://cdn.discordapp.com/attachments/1013104220934787152/1018577533609975819/unknown.png', 'height' : 200, 'width' : 800},
+    'author' : {'name' : 'Pravin Kumar', 'url' : 'https://cdn.discordapp.com/attachments/1013104220934787152/1018577280332746752/20220812_221553.jpg'}
+    },
+    {
+    'color' : 0xA5DEF2,
+    'title' : 'Cloud Computing',
+    'description' : 'Delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet',
+    'footer' : {'text' : 'For more information contact the domain lead by clicking the name above'},
+    'image' : {'url' : 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200710234318/Why-Cloud-Computing-is-Booming-in-the-Market.png', 'height' : 200, 'width' : 800},
+    'author' : {'name' : 'Oren Saldanha', 'url' : 'https://www.linkedin.com/in/orensaldanha/', 'icon_url' : 'https://avatars.githubusercontent.com/u/36854536?v=4'}
+    },
+    {
+    "color": 0xEDFF71,
+    "title": "Competitive Programming",
+    "description": "Think, Analyze, Solve Problems and Unravel a new world of Puzzles!",
+    "footer": {"text": "Feel free to contact me by clicking on my name above"},
+    "image": {
+        "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+        "height": 200,
+        "width": 800
+    },
+    "author": {
+        "name": "Yashas",
+        "url": "https://www.linkedin.com/in/yashas-ip-4926641b4/",
+        "icon_url": "https://firebasestorage.googleapis.com/v0/b/gdsc-sjec.appspot.com/o/team%2F4SO19CS180.jpg?alt=media&token=e3c6e892-1def-45e5-9e08-dacc932d6e46"
+    }
+    }, 
+    {
+    'color': 0xf01620,
+    'title': 'UI/UX',
+    'description': 'Design wonderful and exciting interfaces and experiences for users',
+    'footer' : {'text': 'For more information contact the domain lead by clicking the name above'},
+    'image' : {'url': 'https://images.unsplash.com/photo-1658204212985-e0126040f88f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1162&q=80', 'height': 200, 'width': 800},
+    'author' : {'name': 'Avinash', 'url': 'https://www.linkedin.com/in/avinash-muralidharan-75b1a9226/', 'icon_url': 'https://cdn.discordapp.com/avatars/478525019157299200/c51b5b9b8541d03c4d3d36c410179ccf.webp?size=160%27%7D'}
+    }
+    ]
+    channel = bot.get_channel(int(os.environ['domainChannelId']))
+    for dic in domains:
+        embed = discord.Embed().from_dict(dic)
+        await channel.send(embed = embed)
 
 
 @bot.event
@@ -241,7 +311,7 @@ async def on_message(message):
             await message.add_reaction('❌')
 
 
-    if message.content.lower().startswith('dm'):
+    if message.content.lower().startswith('dm-me-I-am-owner'):
         await message.author.send(view = form_button_view())
         # await bot.get_channel(1010434735757082706).send(view = form_button_view())
         await message.channel.send(f'Hello {message.author.mention} (👉ﾟヮﾟ)👉,\n Wassup\n Ive slided into your DMs, catch me there! 🤗')
@@ -253,82 +323,13 @@ async def on_message(message):
         # # embed.add_field(name="You are good to go now!", value = '', inline=False)
         # await message.author.send(embed = embed)
 
-    if message.content.lower().startswith('domains'):
+    # if message.content.lower().startswith('domains'):
         # embed = discord.Embed(color = 0xff00ff, title = 'Web Development', description = "Web Dev is sexy profession")
         # embed.set_footer(text = "For more information contact the domain lead by clicking the name above")
         # embed.set_image(url = "https://picsum.photos/800/200?random=1")
         # embed.set_author(name = "godey", url = "https://www.google.com", icon_url = "https://www.google.com")
 
-        domains = [
-            {
-            'color': 0x064f9a,
-            'title': 'Web Development',
-            'description': 'The web is our playground, come be a part of the team that shapes the web',
-            'footer' : {'text': 'For more information contact the domain lead by clicking the name above'},
-            'image' : {'url': 'https://wallpaperaccess.com/full/1657858.jpg', 'height': 200, 'width': 800},
-            'author' : {'name': 'Godnon', 'url': 'https://www.linkedin.com/in/godnon-dsilva/', 'icon_url': 'https://avatars.githubusercontent.com/u/50076340?v=4'}
-            },
-            {
-            'color' : 0xffffff,
-            'title' : 'Game Development',
-            'description' : 'An art of developing a virtual world which models by the rules and constraints defined by you.',
-            'footer' : {'text' : 'If you want to know more about Game Dev or have some doubts , you can always ping me by clicking on my name!'},
-            'image' : {'url' : 'https://images.unsplash.com/photo-1556438064-2d7646166914?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80', 'height' : 200, 'width' : 800},
-            'author' : {'name' : 'Ashish Kishore', 'url' : 'https://www.linkedin.com/in/ashish-kishore-kumar/', 'icon_url' : 'https://avatars.githubusercontent.com/u/68268366?v=4' }
-            },
-            {
-            'color' : 0xffffff,
-            'title' : 'Android Development',
-            'description' : 'Android development mainly focuses on the development of android applications using kotlin and flutter.',
-            'footer' : {'text' : 'For more information contact the domain lead by clicking the name above'},
-            'image' : {'url' : 'https://media.discordapp.net/attachments/1017871199654658099/1018025844976910386/Android_Image.jpg', 'height' : 200, 'width' : 800},
-            'author' : {'name' : 'Pratheek', 'url' : 'https://www.linkedin.com/in/pratheek-raghunath/', 'icon_url' : 'https://media.discordapp.net/attachments/776130355681427498/1018026587163213864/Dp.jpeg'}
-            },
-            {
-            'color' : 0x000000,
-            'title' : 'AI/ML',
-            'description' : 'Artificial Intelligence: Where machines are smarter',
-            'footer' : {'text' : 'Contact me by clicking on my name, Thank you 🤗'},
-            'image' : {'url' : 'https://cdn.discordapp.com/attachments/1013104220934787152/1018577533609975819/unknown.png', 'height' : 200, 'width' : 800},
-            'author' : {'name' : 'Pravin Kumar', 'url' : 'https://cdn.discordapp.com/attachments/1013104220934787152/1018577280332746752/20220812_221553.jpg'}
-            },
-            {
-            'color' : 0xA5DEF2,
-            'title' : 'Cloud Computing',
-            'description' : 'Delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet',
-            'footer' : {'text' : 'For more information contact the domain lead by clicking the name above'},
-            'image' : {'url' : 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200710234318/Why-Cloud-Computing-is-Booming-in-the-Market.png', 'height' : 200, 'width' : 800},
-            'author' : {'name' : 'Oren Saldanha', 'url' : 'https://www.linkedin.com/in/orensaldanha/', 'icon_url' : 'https://avatars.githubusercontent.com/u/36854536?v=4'}
-            },
-            {
-            "color": 0xEDFF71,
-            "title": "Competitive Programming",
-            "description": "Think, Analyze, Solve Problems and Unravel a new world of Puzzles!",
-            "footer": {"text": "Feel free to contact me by clicking on my name above"},
-            "image": {
-                "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-                "height": 200,
-                "width": 800
-            },
-            "author": {
-                "name": "Yashas",
-                "url": "https://www.linkedin.com/in/yashas-ip-4926641b4/",
-                "icon_url": "https://firebasestorage.googleapis.com/v0/b/gdsc-sjec.appspot.com/o/team%2F4SO19CS180.jpg?alt=media&token=e3c6e892-1def-45e5-9e08-dacc932d6e46"
-            }
-            }, 
-            {
-            'color': 0xf01620,
-            'title': 'UI/UX',
-            'description': 'Design wonderful and exciting interfaces and experiences for users',
-            'footer' : {'text': 'For more information contact the domain lead by clicking the name above'},
-            'image' : {'url': 'https://images.unsplash.com/photo-1658204212985-e0126040f88f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1162&q=80', 'height': 200, 'width': 800},
-            'author' : {'name': 'Avinash', 'url': 'https://www.linkedin.com/in/avinash-muralidharan-75b1a9226/', 'icon_url': 'https://cdn.discordapp.com/avatars/478525019157299200/c51b5b9b8541d03c4d3d36c410179ccf.webp?size=160%27%7D'}
-            }
-        ]
-        channel = bot.get_channel(int(os.environ['domainChannelId']))
-        for dic in domains:
-            embed = discord.Embed().from_dict(dic)
-            await channel.send(embed = embed)
+
 
 
     # if message.content.startswith('$join'):
@@ -342,7 +343,7 @@ async def on_message_delete(message):
 
 @bot.event 
 async def on_member_join(member):
-    print(member.roles)
+    # print(member.roles)
     await member.send(view = form_button_view())
     await member.send(f'Welcome {member.mention} to the GDSC Discord Server 🥳\n We are delighted to Have you here')
 
