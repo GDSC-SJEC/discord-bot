@@ -173,13 +173,17 @@ async def pinging(ctx):
 #     # print(arguments[5])
 #     await ctx.reply(f'{len(args)} arguments: {arguments}')
 
-@bot.command()
-async def join(ctx):
-    # await ctx.reply(f'Which Domain you wanna join?\n 1. Web Development\n 2. Mobile App Development\n 3. Game Development\n 4. AI/ML\n 5. Cloud Computing\n 6. Competitive Programming\n 7. UI/UX\n 8.Others')
-    # await ctx.send('```Use ~joingdsc [domain index] command to join any of the above domains```')
-    embed = discord.Embed(color = 1, title = 'Verification Needed', description = 'Please Verify before youself before you can join any domain!')
-    await ctx.send(embed = embed, view = verify_button_view())
+# @bot.command()
+# async def join(ctx):
+#     # await ctx.reply(f'Which Domain you wanna join?\n 1. Web Development\n 2. Mobile App Development\n 3. Game Development\n 4. AI/ML\n 5. Cloud Computing\n 6. Competitive Programming\n 7. UI/UX\n 8.Others')
+#     # await ctx.send('```Use ~joingdsc [domain index] command to join any of the above domains```')
+#     embed = discord.Embed(color = 1, title = 'Verification Needed', description = 'Please Verify before youself before you can join any domain!')
+#     await ctx.send(embed = embed, view = verify_button_view())
 
+@bot.command()
+async def help(ctx):
+    embed = discord.Embed(color = 1, title = 'HELP DESK', description = 'This bot helps your way in discord , you need not type any command , the bot will take care of it for you')
+    await ctx.send(embed = embed)
 
 # @bot.hybrid_command(name = 'joingdsc', with_app_command = True)
 # # @commands.has_role("GDSC-SJEC") 
@@ -210,14 +214,14 @@ async def join(ctx):
 #     except Exception:
 #         await ctx.reply(f'＞︿＜')
 
-@bot.hybrid_command(name = 'gdsc', with_app_command = True)
-async def gdsc(ctx):
-    await ctx.reply('Avilable Commands are: \n```2. ~join\n3. ~gdsc \n4. ~ping```')
-    # await discord.Interaction.response.send_message(view = button_view())
+# @bot.hybrid_command(name = 'gdsc', with_app_command = True)
+# async def gdsc(ctx):
+#     await ctx.reply('Avilable Commands are: \n```2. ~join\n3. ~gdsc \n4. ~ping```')
+#     # await discord.Interaction.response.send_message(view = button_view())
 
-@bot.hybrid_command(name = 'verify', with_app_command = True)
-async def verify(ctx):
-    await ctx.reply(view = verify_button_view())
+# @bot.hybrid_command(name = 'verify', with_app_command = True)
+# async def verify(ctx):
+#     await ctx.reply(view = verify_button_view())
 
 @bot.hybrid_command(name = 'domains', with_app_command = True)
 async def domains(ctx):
