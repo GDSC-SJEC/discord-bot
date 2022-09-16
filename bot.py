@@ -24,9 +24,9 @@ class MyClient(commands.Bot):
         # self.add_view(verify_button_view())
         # self.add_view(form_button_view())
 
-    # async def setup_hook(self):
-    #     await self.tree.sync()
-    #     print(f"Synced slash commands for {self.user.name}")
+    async def setup_hook(self):
+        await self.tree.sync()
+        print(f"Synced slash commands for {self.user.name}")
 
     async def on_command_error(self, ctx, error):
         print(error)
@@ -56,7 +56,7 @@ class form_button_view(discord.ui.View):
     def __init__(self):
         super().__init__(timeout = None)
 
-        formButton = discord.ui.Button(label='GDSC FORM', style=discord.ButtonStyle.link, url='https://details.gdscsjec.in/')
+        formButton = discord.ui.Button(label='GDSC-SJEC FORM', style=discord.ButtonStyle.link, url='https://details.gdscsjec.in/')
         self.add_item(formButton)
 
     # @discord.ui.button(label = "FORM", style = discord.ButtonStyle.link)
@@ -296,7 +296,7 @@ async def domains(ctx):
     for dic in domains:
         embed = discord.Embed().from_dict(dic)
         await channel.send(embed = embed)
-    await(ctx.send('Domains have been sent to the domain channel'))
+    await ctx.send('Domains have been sent to the domain channel')
 
 @bot.event
 async def on_message(message):
@@ -349,8 +349,10 @@ async def on_message_delete(message):
 @bot.event 
 async def on_member_join(member):
     # print(member.roles)
-    await member.send(view = form_button_view())
     await member.send(f'Welcome {member.mention} to the GDSC Discord Server 🥳\n We are delighted to Have you here')
+    await member.send(view = form_button_view())
+    await member.send('```Please do not forget to introduce yourself in the 👋-Introduction Channel```')
+    
 
 @bot.event
 async def on_reaction_add(reaction, user):
