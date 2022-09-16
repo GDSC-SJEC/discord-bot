@@ -344,7 +344,7 @@ async def on_message(message):
 
 @bot.event
 async def on_message_delete(message):
-    await message.channel.send(f'Yo {message.user.mention}, Admin saw what you deleted 😏')
+    await message.channel.send(f'Yo {message.author.mention}, Admin saw what you deleted 😏')
 
 @bot.event 
 async def on_member_join(member):
