@@ -24,13 +24,13 @@ class MyClient(commands.Bot):
         # self.add_view(verify_button_view())
         # self.add_view(form_button_view())
 
-    async def setup_hook(self):
-        await self.tree.sync()
-        print(f"Synced slash commands for {self.user.name}")
+    # async def setup_hook(self):
+    #     await self.tree.sync()
+    #     print(f"Synced slash commands for {self.user.name}")
 
     async def on_command_error(self, ctx, error):
         print(error)
-        await ctx.reply(error, ephemeral=True) # Dont print error in the discord channel
+        await ctx.reply("Sorry 😔", ephemeral=True) # Dont print error in the discord channel
 
 class verify_button_view(discord.ui.View):
     def __init__(self):
@@ -146,7 +146,7 @@ bot.remove_command('help')
 domains = ['Web Development', 'Mobile App Development', 'Game Development', 'AI/ML', 'Cloud Computing', 'Competitive Programming',  'UI/UX']
 roles = {
             "Web Development": "WEB",
-            "Android Development": "ANDROID",
+            "Mobile Development": "MOBILE",
             "Game Development": "GAME",
             "AI/ML": "AI_ML",
             "Cloud Computing": "CLOUD",
@@ -224,6 +224,7 @@ async def help(ctx):
 #     await ctx.reply(view = verify_button_view())
 
 @bot.hybrid_command(name = 'domains', with_app_command = True)
+@commands.has_role("Elite")
 async def domains(ctx):
     domains = [
     {
@@ -244,7 +245,7 @@ async def domains(ctx):
     },
     {
     'color' : 0xffffff,
-    'title' : 'Android Development',
+    'title' : 'Mobile Development',
     'description' : 'Android development mainly focuses on the development of android applications using kotlin and flutter.',
     'footer' : {'text' : 'For more information contact the domain lead by clicking the name above'},
     'image' : {'url' : 'https://media.discordapp.net/attachments/1017871199654658099/1018025844976910386/Android_Image.jpg', 'height' : 200, 'width' : 800},
@@ -295,7 +296,7 @@ async def domains(ctx):
     for dic in domains:
         embed = discord.Embed().from_dict(dic)
         await channel.send(embed = embed)
-
+    await(ctx.send('Domains have been sent to the domain channel'))
 
 @bot.event
 async def on_message(message):
@@ -315,7 +316,7 @@ async def on_message(message):
             await message.add_reaction('❌')
 
 
-    if message.content.lower().startswith('dm-me-I-am-owner'):
+    if message.content.lower().startswith('cmdbroken'):
         await message.author.send(view = form_button_view())
         # await bot.get_channel(1010434735757082706).send(view = form_button_view())
         await message.channel.send(f'Hello {message.author.mention} (👉ﾟヮﾟ)👉,\n Wassup\n Ive slided into your DMs, catch me there! 🤗')
