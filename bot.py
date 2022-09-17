@@ -30,7 +30,7 @@ class MyClient(commands.Bot):
 
     async def on_command_error(self, ctx, error):
         print(error)
-        await ctx.reply("Sorry 😔", ephemeral=True) # Dont print error in the discord channel
+        await ctx.reply("Sorry 😔, Command not found", ephemeral=True) # Dont print error in the discord channel
 
 class verify_button_view(discord.ui.View):
     def __init__(self):
@@ -182,7 +182,7 @@ async def pinging(ctx):
 
 @bot.command()
 async def help(ctx):
-    embed = discord.Embed(color = 1, title = 'HELP DESK', description = 'This bot helps your way in discord , you need not type any command , the bot will take care of it for you')
+    embed = discord.Embed(color = 1, title = 'HELP DESK', description = '◆ This bot helps your way in discord , you need not type any command , the bot will take care of it for you\n◆ This bot is responsible for assigning roles and giving access to resources of domains that you wish to learn from.\n◆ To join a domain , simply react to it on the domains channel.')
     await ctx.send(embed = embed)
 
 # @bot.hybrid_command(name = 'joingdsc', with_app_command = True)
@@ -311,8 +311,8 @@ async def on_message(message):
             reacted = discord.utils.get(message.guild.roles, name = 'verified')
             await message.author.add_roles(reacted)
             await message.add_reaction('✅')
+            await message.author.send('You have been verified! \nNow chose your domain of interest in 🪧domains channel.')
         except Exception as e:
-            print(e)
             await message.add_reaction('❌')
 
 
@@ -344,7 +344,7 @@ async def on_message(message):
 
 @bot.event
 async def on_message_delete(message):
-    await message.channel.send(f'Yo {message.author.mention}, Admin saw what you deleted 😏')
+    await message.channel.send('Admin saw what you deleted 😏')
 
 @bot.event 
 async def on_member_join(member):
