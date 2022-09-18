@@ -342,9 +342,9 @@ async def on_message(message):
     
     await bot.process_commands(message)
 
-@bot.event
-async def on_message_delete(message):
-    await message.channel.send('Admin saw what you deleted 😏')
+# @bot.event
+# async def on_message_delete(message):
+#     await message.channel.send('Admin saw what you deleted 😏')
 
 @bot.event 
 async def on_member_join(member):
