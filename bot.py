@@ -23,8 +23,7 @@ class MyClient(commands.Bot):
         print('Logged in as', self.user)
         # self.add_view(verify_button_view())
         # self.add_view(form_button_view())
-        async for msg in self.logs_from(self.get_channel(int(os.environ['domainChannelId']))):
-            await self.delete_message(msg)
+        await deleteAllMsgsFromDomain()
         await domains(self)
 
     async def setup_hook(self):
@@ -225,6 +224,11 @@ async def help(ctx):
 # @bot.hybrid_command(name = 'verify', with_app_command = True)
 # async def verify(ctx):
 #     await ctx.reply(view = verify_button_view())
+
+async def deleteAllMsgsFromDomain():
+    channel = bot.get_channel(int(os.environ['domainChannelId']))
+    await channel.purge()
+    print("Deleted Succesfully")
 
 @bot.hybrid_command(name = 'domains', with_app_command = True)
 @commands.has_role("Elite")
