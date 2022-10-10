@@ -23,6 +23,8 @@ class MyClient(commands.Bot):
         print('Logged in as', self.user)
         # self.add_view(verify_button_view())
         # self.add_view(form_button_view())
+        async for msg in self.logs_from(self.get_channel(int(os.environ['domainChannelId']))):
+            await self.delete_message(msg)
         await domains(self)
 
     async def setup_hook(self):
