@@ -23,6 +23,7 @@ class MyClient(commands.Bot):
         print('Logged in as', self.user)
         # self.add_view(verify_button_view())
         # self.add_view(form_button_view())
+        await domains(self)
 
     async def setup_hook(self):
         await self.tree.sync()
@@ -143,7 +144,7 @@ bot = MyClient()
 bot.remove_command('help')
 # tree = app_commands.CommandTree(bot)
 
-domains = ['Web Development', 'Mobile App Development', 'Game Development', 'AI/ML', 'Cloud Computing', 'Competitive Programming',  'UI/UX']
+# domains = ['Web Development', 'Mobile App Development', 'Game Development', 'AI/ML', 'Cloud Computing', 'Competitive Programming',  'UI/UX']
 roles = {
             "Web Development": "WEB",
             "Mobile Development": "MOBILE",
@@ -316,10 +317,10 @@ async def on_message(message):
             await message.add_reaction('❌')
 
 
-    if message.content.lower().startswith('cmdbroken'):
-        await message.author.send(view = form_button_view())
+    # if message.content.lower().startswith('cmdbroken'):
+        # await message.author.send(view = form_button_view())
         # await bot.get_channel(1010434735757082706).send(view = form_button_view())
-        await message.channel.send(f'Hello {message.author.mention} (👉ﾟヮﾟ)👉,\n Wassup\n Ive slided into your DMs, catch me there! 🤗')
+        # await message.channel.send(f'Hello {message.author.mention} (👉ﾟヮﾟ)👉,\n Wassup\n Ive slided into your DMs, catch me there! 🤗')
         # embed = discord.Embed(color = 0xffffff, title = 'The Process Flow', description = "Here's the step by step guide on what to do next")
         # embed.add_field(name="Step 1", value="Check you DM for message from GDSC-SJEC BOT", inline=False)
         # embed.add_field(name="Step 2", value="Click on the Button to store your info into our Database", inline=False)
@@ -327,6 +328,22 @@ async def on_message(message):
         # embed.add_field(name="Step 4", value="Come back to verification Channel and use ~join command", inline=False)
         # # embed.add_field(name="You are good to go now!", value = '', inline=False)
         # await message.author.send(embed = embed)
+
+
+    if message.content.lower().startswith('compose'):
+        lol = {
+        'color': 0x00a550,
+        'title': 'Compose Camp - Getting Started',
+        'description': "Let's test your skills with some composing!\nUpload screenshots of your Business Card App along with the code and win shoutouts for the best design.\nCheckout the pathways to learn more.",
+        'footer' : {'text': 'Submission: 25/09/2022, Sunday EOD'},
+        'image' : {'url': 'https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_3,f_auto,g_center,h_175,q_auto:good,w_175/v1/gcs/platform-data-dsc/event_banners/Kotlin-DSC-Promo-Event-Page-Thumbnail-R2-NAVY.png', 'height': 500, 'width': 500},
+        # 'url' : 'https://drive.google.com/drive/folders/1OQ1QwHRtWFQW4Kbv29fAZaUF9chYI4Qc'
+        }
+        embed = discord.Embed().from_dict(lol)
+        embed.add_field(name = 'Pathways url', value = 'https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-3', inline = False)
+        embed.add_field(name = 'Submission Link', value = 'https://drive.google.com/drive/folders/1OQ1QwHRtWFQW4Kbv29fAZaUF9chYI4Qc', inline = False)
+        embed.add_field(name = 'Naming Convention' , value = 'Make a folder with your `Name_USN` and upload files in it.', inline = False)
+        await message.channel.send(embed = embed)
 
     # if message.content.lower().startswith('domains'):
         # embed = discord.Embed(color = 0xff00ff, title = 'Web Development', description = "Web Dev is sexy profession")
@@ -366,6 +383,16 @@ async def on_reaction_add(reaction, user):
         except IndexError:
             await user.send("Oh Sorry!, You reacted to wrong message 😕")
 
+@bot.event
+async def on_reaction_remove(reaction, user):
+    if reaction.message.channel.id == int(os.environ['domainChannelId']) and 'verified' in [role.name.lower() for role in user.roles]:
+            try:
+                title = reaction.message.embeds[0].title
+                reacted = discord.utils.get(reaction.message.guild.roles, name = roles[title])
+                await user.remove_roles(reacted)
+                await user.send("Sorry to see you go!")
+            except IndexError:
+                await user.send("Oh Sorry!, You reacted to wrong message 😕")
 
 
 bot.run(os.environ['token'])
